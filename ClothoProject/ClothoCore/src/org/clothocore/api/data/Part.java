@@ -174,13 +174,15 @@ public class Part extends ObjBase {
         }
 
         //Check to see if a Part by this name already exists in the database
-        prexistingSeq = retrieveByName(name);
+        prexistingSeq = retrieveByExactName(name); 
+        // can't use retrieveByName since it checks whether a part contains 
+        // the same name, not if the part has the same name
         while (prexistingSeq != null) {
             name = JOptionPane.showInputDialog("A part named " + name + " already exists, please give me a new name.");
             if (name == null) {
                 return null;
             }
-            prexistingSeq = retrieveByName(name);
+            prexistingSeq = retrieveByExactName(name);
         }
 
         Part pa = null;
@@ -256,13 +258,16 @@ public class Part extends ObjBase {
         }
 
         //Check to see if a Part by this hash already exists in the database
-        prexistingSeq = retrieveByName(name);
+        prexistingSeq = retrieveByExactName(name);
+        // can't use retrieveByName since it checks whether a part contains 
+        // the same name, not if the part has the same name
+
         while (prexistingSeq != null) {
             name = JOptionPane.showInputDialog("A part named " + name + " already exists, please give me a new name.");
             if (name == null) {
                 return null;
             }
-            prexistingSeq = retrieveByName(name);
+            prexistingSeq = retrieveByExactName(name);
         }
 
         //Since it was a proper composition of Format f, make the new Part
@@ -527,7 +532,9 @@ public class Part extends ObjBase {
      * */
     @Override
     public void changeName(final String newname) {
-        Part existing = Part.retrieveByName(newname);
+        Part existing = Part.retrieveByExactName(newname);
+        // can't use retrieveByName since it checks whether a part contains 
+        // the same name, not if the part has the same exact name
         if (existing != null) {
             if (!existing.getUUID().equals(this.getUUID())) {
                 setChanged(RefreshEvent.Condition.NAME_CHANGED);
@@ -755,9 +762,11 @@ public class Part extends ObjBase {
                     relayRiskGroup(currentHighest);
                 }
 
+                
                 //If a subpart has a 2+ risk group
                 if (p.getRiskGroup() > 1) {
                     if (firsthigher) {
+                        
                         //Throw a dialog asking for user to put in the new risk group
                         ButtonGroup group = new javax.swing.ButtonGroup();
                         String msgString = "This composite part joins two subparts with risk groups of 2 or higher.  What should the new value be?";
@@ -771,10 +780,12 @@ public class Part extends ObjBase {
                         }
                         array[0] = msgString;
 
+                        /* // sbhatia commented this out
                         int sel = -1;
                         while (sel != 0) {
                             sel = JOptionPane.showConfirmDialog(null, array, "", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
-                        }
+                        }*/
+                        buttons[0].setSelected(true); // sbhatia added this line
                         scanButtons:
                         for (short i = 1; i < numelements; i++) {
                             if (buttons[i].isSelected()) {
@@ -833,6 +844,21 @@ public class Part extends ObjBase {
         return p;
     }
 
+    public static Part retrieveByExactName(String name) {
+        if (name.length() == 0) {
+            return null;
+        }
+        ClothoQuery cq = Hub.defaultConnection.createQuery(ObjType.PART);
+        cq.eq(Part.Fields.NAME, name);
+        List l = cq.getResults();
+        if (l.isEmpty()) {
+            return null;
+        }
+        Part p = (Part) l.get(0);
+        return p;
+    }
+
+    
     public static Part retrieveByHash(String hash) {
         if (hash.length() == 0) {
             return null;
