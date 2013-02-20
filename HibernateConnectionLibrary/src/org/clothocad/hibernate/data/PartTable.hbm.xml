@@ -37,25 +37,25 @@
     <property name="isBasic" type="java.lang.Byte">
       <column name="isBasic"/>
     </property>
-    <set inverse="true" name="partGrammarXrefs">
+    <set inverse="true" name="partGrammarXrefs" cascade="delete">
       <key>
         <column length="63" name="partId" not-null="true"/>
       </key>
       <one-to-many class="org.clothocad.hibernate.data.PartGrammarXref"/>
     </set>
-    <set inverse="true" name="plasmidTables">
+    <set inverse="true" name="plasmidTables" cascade="delete">
       <key>
         <column length="63" name="partId"/>
       </key>
       <one-to-many class="org.clothocad.hibernate.data.PlasmidTable"/>
     </set>
-    <set inverse="true" name="compositeXrefsForParentPart">
+    <set inverse="true" name="compositeXrefsForParentPart" cascade="delete">
       <key>
         <column length="63" name="parentPart"/>
       </key>
       <one-to-many class="org.clothocad.hibernate.data.CompositeXref"/>
     </set>
-    <set inverse="true" name="compositeXrefsForChildPart">
+    <set inverse="true" name="compositeXrefsForChildPart" cascade="delete">
       <key>
         <column length="63" name="childPart"/>
       </key>
