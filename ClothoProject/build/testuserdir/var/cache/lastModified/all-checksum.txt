@@ -1,0 +1,7 @@
+home=1357678516677
+cluster=1362607930471
+platform=1357678516677
+user=1362607930471
+crc=7
+locale=en_US
+branding=clotho

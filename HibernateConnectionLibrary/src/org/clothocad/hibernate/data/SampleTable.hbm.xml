@@ -46,7 +46,7 @@
     <property name="lastModified" type="timestamp">
       <column length="19" name="lastModified"/>
     </property>
-    <set inverse="true" name="sampleDataXrefs">
+    <set inverse="true" name="sampleDataXrefs" cascade="all">
       <key>
         <column length="63" name="sampleId" not-null="true"/>
       </key>

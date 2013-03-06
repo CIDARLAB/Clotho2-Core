@@ -71,8 +71,12 @@ public class HibernateConnection implements ClothoConnection {
     }
 
     public static List<FileObject> getDefaultMappings() {
-        FileObject mappingDir = FileUtil.getConfigFile( "data/private/org.clothocad.hibernate" );
-        return Arrays.asList( mappingDir.getChildren() );
+        FileObject mappingDir = FileUtil.getConfigFile( "data/private/org.clothocad.hibernate/" );
+        if (mappingDir == null) {
+            return null;
+        } else {
+            return Arrays.asList( mappingDir.getChildren() );
+        }
     }
 
     public boolean connect( URL hibernateXML, List<URL> mappings ) {
@@ -296,7 +300,7 @@ public class HibernateConnection implements ClothoConnection {
         Session s = null;
         Transaction t = null;
         try {
-            boolean startedsession = false;;
+            boolean startedsession = false;
             if(activeSession!=null) {
                 s = activeSession;
             } else {
@@ -304,6 +308,8 @@ public class HibernateConnection implements ClothoConnection {
                 startedsession = true;
             }
             t = s.beginTransaction();
+            s.saveOrUpdate(toDelete);
+            s.merge(toDelete);
             if ( toDelete != null ) {
                 s.delete( toDelete );
             } else {
@@ -399,9 +405,10 @@ public class HibernateConnection implements ClothoConnection {
         try {
             System.out.println( "Delete doing a transaction" );
             s = fac.openSession();
+            hibernateDatum toDelete = getHibernateDatum(obj.getType(), obj.getUUID(), s);
             t = s.beginTransaction();
             if ( obj != null ) {
-                s.delete( getEmptyDatum( obj ) );
+                s.delete( toDelete );
             } else {
                 return false;
             }
@@ -1032,6 +1039,7 @@ public class HibernateConnection implements ClothoConnection {
     private Session activeSession = null;
     private static FileFilter configFileFilter = new FileFilter() {
 
+        @Override
         public boolean accept( File pathname ) {
             return pathname.getName().endsWith( ".cfg.xml" );
         }
