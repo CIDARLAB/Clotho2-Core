@@ -46,6 +46,10 @@
                 <file name="StrainNoteXref.hbm.xml" url="data/StrainNoteXref.hbm.xml"/>
                 <file name="StrainPlasmidXref.hbm.xml" url="data/StrainPlasmidXref.hbm.xml"/>
             </folder>
+            
+            <folder name="org.clothocad.testdata">
+                <file name="test.hbm.xml" url="testdata/test.hbm.xml"/>
+            </folder>
         </folder>
     </folder>
 </filesystem>
