@@ -46,18 +46,18 @@ public class Plasmid extends ObjBase {
         super(d);
         _plasDatum = d;
 
-        if (_plasDatum._riskGroup == -1) {
-            final Plasmid item = this;
-            Thread bslThread = new Thread() {
-
-                @Override
-                public void run() {
-                    changeRiskGroup();
-                }
-            };
-            bslThread.start();
-            addSaveHold(bslThread);
-        }
+//        if (_plasDatum._riskGroup == -1) {
+//            final Plasmid item = this;
+//            Thread bslThread = new Thread() {
+//
+//                @Override
+//                public void run() {
+//                    changeRiskGroup();
+//                }
+//            };
+//            bslThread.start();
+//            addSaveHold(bslThread);
+//        }
     }
 
     /**This constructor can only be called with a check to the Format
@@ -92,8 +92,8 @@ public class Plasmid extends ObjBase {
         Date lastModified = getDateFromString((String) objHash.get("_lastModified"));
 
         String idPerson = (String) objHash.get("_authorUUID");
-        String sriskGroup = (String) objHash.get("_riskGroup");
-        short riskGroup = Short.parseShort(sriskGroup);
+//        String sriskGroup = (String) objHash.get("_riskGroup");
+//        short riskGroup = Short.parseShort(sriskGroup);
         String idPart = (String) objHash.get("_partUUID");
         String idVector = (String) objHash.get("_vectorUUID");
         String idformat = (String) objHash.get("_formatUUID");
@@ -110,7 +110,7 @@ public class Plasmid extends ObjBase {
         d._vectorUUID = idVector;
         d._formatUUID = idformat;
         d._constructionFile = constructionFile;
-        d._riskGroup = riskGroup;
+//        d._riskGroup = riskGroup;
 
         return new Plasmid(d);
     }

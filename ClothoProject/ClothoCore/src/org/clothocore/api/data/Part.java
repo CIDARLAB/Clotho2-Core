@@ -55,18 +55,22 @@ public class Part extends ObjBase {
         super(d);
         _partDatum = d;
 
-        if (_partDatum._riskGroup == -1) {
-            final Part item = this;
-            Thread bslThread = new Thread() {
-
-                @Override
-                public void run() {
-                    setRiskGroup(item.getSeq().performBiosafetyCheck());
-                }
-            };
-            bslThread.start();
-            addSaveHold(bslThread);
-        }
+//        if (_partDatum._riskGroup == -1) {
+//            final Part item = this;
+//            Thread bslThread = new Thread() {
+//
+//                @Override
+//                public void run() {
+//                    try {
+//                        setRiskGroup(item.getSeq().performBiosafetyCheck());
+//                    } catch (Exception e) {
+//                        e.printStackTrace();
+//                    }
+//                }
+//            };
+//            bslThread.start();
+//            addSaveHold(bslThread);
+//        }
     }
 
     @Override
@@ -174,7 +178,7 @@ public class Part extends ObjBase {
         }
 
         //Check to see if a Part by this name already exists in the database
-        prexistingSeq = retrieveByExactName(name); 
+        prexistingSeq = retrieveByExactName(name);
         // can't use retrieveByName since it checks whether a part contains 
         // the same name, not if the part has the same name
         while (prexistingSeq != null) {
@@ -762,11 +766,11 @@ public class Part extends ObjBase {
                     relayRiskGroup(currentHighest);
                 }
 
-                
+
                 //If a subpart has a 2+ risk group
                 if (p.getRiskGroup() > 1) {
                     if (firsthigher) {
-                        
+
                         //Throw a dialog asking for user to put in the new risk group
                         ButtonGroup group = new javax.swing.ButtonGroup();
                         String msgString = "This composite part joins two subparts with risk groups of 2 or higher.  What should the new value be?";
@@ -783,7 +787,7 @@ public class Part extends ObjBase {
                         /* // sbhatia commented this out
                         int sel = -1;
                         while (sel != 0) {
-                            sel = JOptionPane.showConfirmDialog(null, array, "", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
+                        sel = JOptionPane.showConfirmDialog(null, array, "", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
                         }*/
                         buttons[0].setSelected(true); // sbhatia added this line
                         scanButtons:
@@ -812,7 +816,7 @@ public class Part extends ObjBase {
             if (afeat == null) {
                 continue;
             }
-            relayRiskGroup(afeat.getRiskGroup());
+//            relayRiskGroup(afeat.getRiskGroup());
         }
     }
 
@@ -858,7 +862,6 @@ public class Part extends ObjBase {
         return p;
     }
 
-    
     public static Part retrieveByHash(String hash) {
         if (hash.length() == 0) {
             return null;
