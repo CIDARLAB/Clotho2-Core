@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.clothocad.algorithm.searchalgorithm">
-    <module_version install_time="1363022701535" last="true" origin="installer" specification_version="1.0">
-        <file crc="950323250" name="config/Modules/org-clothocad-algorithm-searchalgorithm.xml"/>
-        <file crc="2019709747" name="modules/org-clothocad-algorithm-searchalgorithm.jar"/>
-    </module_version>
-</module>

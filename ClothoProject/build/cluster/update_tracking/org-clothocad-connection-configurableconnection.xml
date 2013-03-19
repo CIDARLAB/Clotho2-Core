@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><module codename="org.clothocad.connection.configurableconnection/1">
-    <module_version install_time="1363022697798" last="true" origin="installer" specification_version="1.0">
-        <file crc="2537981729" name="config/Modules/org-clothocad-connection-configurableconnection.xml"/>
-        <file crc="3969011033" name="modules/org-clothocad-connection-configurableconnection.jar"/>
-    </module_version>
-</module>
