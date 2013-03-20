@@ -472,6 +472,9 @@ public class Part extends ObjBase {
             NucSeq nseq = this.getSeq();
             nseq.deleteFromDatabase();
             nseq.setTransient();
+            //remove part and nucseq from Collector
+            Collector.remove(this);
+            Collector.remove(nseq);
             return true;
         }
         return false;

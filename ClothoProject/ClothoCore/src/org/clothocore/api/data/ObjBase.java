@@ -302,6 +302,7 @@ public abstract class ObjBase implements Serializable {
         if ( Hub.defaultConnection.delete( this ) ) {
         this._inDatabase = false;
         this.setTransient();
+        Collector.remove(this);
         return true;
         }
         return false;
