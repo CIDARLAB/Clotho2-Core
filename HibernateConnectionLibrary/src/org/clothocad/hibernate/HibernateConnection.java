@@ -308,6 +308,8 @@ public class HibernateConnection implements ClothoConnection {
                 startedsession = true;
             }
             t = s.beginTransaction();
+            s.saveOrUpdate(toDelete);
+            s.merge(toDelete);
             if ( toDelete != null ) {
                 s.delete( toDelete );
             } else {
@@ -403,9 +405,15 @@ public class HibernateConnection implements ClothoConnection {
         try {
             System.out.println( "Delete doing a transaction" );
             s = fac.openSession();
+            hibernateDatum toDelete = getHibernateDatum(obj.getType(), obj.getUUID(), s);
             t = s.beginTransaction();
             if ( obj != null ) {
-                s.delete( getEmptyDatum( obj ) );
+//                String sqlDeleteQuery = "DELETE FROM PartTable where idPart='"+obj.getUUID()+"'";
+//                s.createQuery(sqlDeleteQuery).executeUpdate(); //works
+                String hqlDeleteQuery = "delete FROM PartTable where idPart = :idPart";
+                s.createQuery(hqlDeleteQuery).setParameter("idPart", obj.getUUID()).executeUpdate();
+//                s.delete( toDelete ); //doesn't work
+//                HibernateConnection.connection.deleteDatum(toDelete); //doesn't work
             } else {
                 return false;
             }
@@ -437,7 +445,7 @@ public class HibernateConnection implements ClothoConnection {
             session = fac.openSession();
             transaction = session.beginTransaction();
             for ( ObjBase obj : objs ) {
-                Object toDelete = getEmptyDatum( obj );
+            hibernateDatum toDelete = getHibernateDatum(obj.getType(), obj.getUUID(), session);
                 if ( toDelete != null ) {
                     session.delete( toDelete );
                     succeeded++;
