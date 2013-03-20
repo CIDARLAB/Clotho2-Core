@@ -364,12 +364,10 @@ public class Collector {
      * @param item = the object you want to put in the Collector
      */
     public static void remove(ObjBase item) {
-        System.out.println("removing "+item.getName());
         resetDelay();
         String uuid = item.getUUID();
         ObjType type = item.getType();
-        if (!_everything.containsKey(uuid)) {
-            System.out.println("removing " + type.toString() + " " + uuid + " item to collector");
+        if (_everything.containsKey(uuid)) {
             _everything.remove(uuid);
             _uuidTypeHash.remove(uuid);
             _itemUUIDs.remove(type);
@@ -739,13 +737,13 @@ public class Collector {
      */
     public synchronized static ArrayList getAll(ObjType type) {
         ArrayList<ObjBase> out = new ArrayList<ObjBase>();
-        
+
         //database items
         ArrayList<ObjLink> dbobjs = Hub.defaultConnection.getAllLinks(type);
         for (ObjLink link : dbobjs) {
             out.add(Collector.get(type, link.uuid));
         }
-        
+
         //local items
         ArrayList<String> listy = new ArrayList<String>();
         if (_typeUUIDHash.containsKey(type)) {

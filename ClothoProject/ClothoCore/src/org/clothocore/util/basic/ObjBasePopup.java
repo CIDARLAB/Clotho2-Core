@@ -132,6 +132,9 @@ public class ObjBasePopup {
     }
     
     private void constructPopup(ObjBase o, JComponent popup) {
+        if(o==null) {
+            return;
+        }
          Object[] _viewers = Collator.getAvailableViewers(o.getType()).toArray();
          ItemHandler handler = new ItemHandler(o);
 
