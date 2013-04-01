@@ -1,0 +1,5 @@
+ClothoProject/build*
+ClothoProject/ClothoCore/build*
+HibernateConnectionLibrary/build*
+
+*.class
