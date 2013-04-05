@@ -35,15 +35,15 @@
         <property name="lastModified" type="timestamp">
             <column name="lastModified" length="19" />
         </property>
-        <set name="strainPlasmidXrefs" inverse="true">
+        <set name="strainPlasmidXrefs" inverse="true" cascade="delete">
             <key>
                 <column name="plasmidId" length="63" not-null="true" />
             </key>
             <one-to-many class="org.clothocad.hibernate.data.StrainPlasmidXref" />
         </set>
-        <set name="sampleTables" inverse="true">
+        <set name="sampleTables" inverse="true" cascade="all, delete-orphan" fetch="select" lazy="false">
             <key>
-                <column name="plasmidId" length="63" />
+                <column name="plasmidId" length="63" not-null="true" />
             </key>
             <one-to-many class="org.clothocad.hibernate.data.SampleTable" />
         </set>

@@ -59,22 +59,22 @@ public class Vector extends ObjBase {
         super(d);
         _vecDatum = d;
 
-        if (_vecDatum._riskGroup == -1) {
-            final Vector item = this;
-            Thread bslThread = new Thread() {
-
-                @Override
-                public void run() {
-                    short newrg = item.getSeq().performBiosafetyCheck();
-                    if (item._vecDatum._riskGroup != newrg) {
-                        _vecDatum._riskGroup = newrg;
-                        item.setChanged(org.clothocore.api.dnd.RefreshEvent.Condition.NAME_CHANGED);
-                    }
-                }
-            };
-            bslThread.start();
-            addSaveHold(bslThread);
-        }
+//        if (_vecDatum._riskGroup == -1) {
+//            final Vector item = this;
+//            Thread bslThread = new Thread() {
+//
+//                @Override
+//                public void run() {
+//                    short newrg = item.getSeq().performBiosafetyCheck();
+//                    if (item._vecDatum._riskGroup != newrg) {
+//                        _vecDatum._riskGroup = newrg;
+//                        item.setChanged(org.clothocore.api.dnd.RefreshEvent.Condition.NAME_CHANGED);
+//                    }
+//                }
+//            };
+//            bslThread.start();
+//            addSaveHold(bslThread);
+//        }
     }
 
     private Vector(String name, String desc, String seq, Format form, Person author) {

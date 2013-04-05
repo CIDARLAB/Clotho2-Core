@@ -51,18 +51,18 @@ public class Feature extends ObjBase {
         super(d);
         _featDatum = d;
 
-        if (_featDatum._riskGroup == -1) {
-            final Feature afeature = this;
-            Thread bslThread = new Thread() {
-
-                @Override
-                public void run() {
-                    afeature.changeRiskGroup(afeature.getSeq().performBiosafetyCheck());
-                }
-            };
-            bslThread.start();
-            afeature.addSaveHold(bslThread);
-        }
+//        if (_featDatum._riskGroup == -1) {
+//            final Feature afeature = this;
+//            Thread bslThread = new Thread() {
+//
+//                @Override
+//                public void run() {
+//                    afeature.changeRiskGroup(afeature.getSeq().performBiosafetyCheck());
+//                }
+//            };
+//            bslThread.start();
+//            afeature.addSaveHold(bslThread);
+//        }
     }
 
     /**

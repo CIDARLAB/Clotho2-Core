@@ -1,24 +1,24 @@
 /*
-Copyright (c) 2009 The Regents of the University of California.
-All rights reserved.
-Permission is hereby granted, without written agreement and without
-license or royalty fees, to use, copy, modify, and distribute this
-software and its documentation for any purpose, provided that the above
-copyright notice and the following two paragraphs appear in all copies
-of this software.
+ Copyright (c) 2009 The Regents of the University of California.
+ All rights reserved.
+ Permission is hereby granted, without written agreement and without
+ license or royalty fees, to use, copy, modify, and distribute this
+ software and its documentation for any purpose, provided that the above
+ copyright notice and the following two paragraphs appear in all copies
+ of this software.
 
-IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY
-FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
-ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF
-THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF
-SUCH DAMAGE.
-createQuery
-THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
-INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
-MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE
-PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE UNIVERSITY OF
-CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
-ENHANCEMENTS, OR MODIFICATIONS..
+ IN NO EVENT SHALL THE UNIVERSITY OF CALIFORNIA BE LIABLE TO ANY PARTY
+ FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL DAMAGES
+ ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF
+ THE UNIVERSITY OF CALIFORNIA HAS BEEN ADVISED OF THE POSSIBILITY OF
+ SUCH DAMAGE.
+ createQuery
+ THE UNIVERSITY OF CALIFORNIA SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+ INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
+ MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE
+ PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE UNIVERSITY OF
+ CALIFORNIA HAS NO OBLIGATION TO PROVIDE MAINTENANCE, SUPPORT, UPDATES,
+ ENHANCEMENTS, OR MODIFICATIONS..
  */
 package org.clothocore.api.data;
 
@@ -55,18 +55,18 @@ public class Part extends ObjBase {
         super(d);
         _partDatum = d;
 
-        if (_partDatum._riskGroup == -1) {
-            final Part item = this;
-            Thread bslThread = new Thread() {
-
-                @Override
-                public void run() {
-                    setRiskGroup(item.getSeq().performBiosafetyCheck());
-                }
-            };
-            bslThread.start();
-            addSaveHold(bslThread);
-        }
+//        if (_partDatum._riskGroup == -1) {
+//            final Part item = this;
+//            Thread bslThread = new Thread() {
+//
+//                @Override
+//                public void run() {
+//                    setRiskGroup(item.getSeq().performBiosafetyCheck());
+//                }
+//            };
+//            bslThread.start();
+//            addSaveHold(bslThread);
+//        }
     }
 
     @Override
@@ -77,7 +77,7 @@ public class Part extends ObjBase {
     /**
      * Create basic from scratch
      *
-     * @param name  nickname of Part, like "roo40"
+     * @param name nickname of Part, like "roo40"
      * @param shortdescription short description, such as "[TetR]"
      * @param seq sequence of the Part like "cgaaggcaggacacacatg"
      * @param form Part Format
@@ -106,7 +106,7 @@ public class Part extends ObjBase {
     /**
      * Create composite from scratch
      *
-     * @param name  nickname of Part, like "roo40"
+     * @param name nickname of Part, like "roo40"
      * @param shortdescription short description, such as "[TetR]"
      * @param seq sequence of the Part like "cgaaggcaggacacacatg"
      * @param form Part Format
@@ -132,16 +132,15 @@ public class Part extends ObjBase {
     }
 
     /**
-     * Call this method to construct a new basic Part.  It will check that:
-     *  1) A sequence in this Format isn't already in the database
-     *      otherwise it returns the Part that already exists
-     *  2) The Part obeys its Format standard
-     *      otherwise it returns null
+     * Call this method to construct a new basic Part. It will check that: 1) A
+     * sequence in this Format isn't already in the database otherwise it
+     * returns the Part that already exists 2) The Part obeys its Format
+     * standard otherwise it returns null
      *
      * Only if those are satisfied is it added to the Collector and returned to
      * the calling code.
      *
-     * @param name  nickname of Part, like "roo40"
+     * @param name nickname of Part, like "roo40"
      * @param shortdescription short description, such as "[TetR]"
      * @param seq sequence of the Part like "cgaaggcaggacacacatg"
      * @param form Part Format
@@ -174,7 +173,7 @@ public class Part extends ObjBase {
         }
 
         //Check to see if a Part by this name already exists in the database
-        prexistingSeq = retrieveByExactName(name); 
+        prexistingSeq = retrieveByExactName(name);
         // can't use retrieveByName since it checks whether a part contains 
         // the same name, not if the part has the same name
         while (prexistingSeq != null) {
@@ -215,7 +214,6 @@ public class Part extends ObjBase {
         //Do risk group setting on a new thread
         final Part partout = pa;
         Thread bslThread = new Thread() {
-
             @Override
             public void run() {
                 partout.setChanged(RefreshEvent.Condition.NAME_CHANGED);
@@ -283,7 +281,6 @@ public class Part extends ObjBase {
         //Do risk group setting on a new thread
         final Part partout = newComposite;
         Thread bslsearch = new Thread() {
-
             @Override
             public void run() {
                 partout.setRiskGroup(partout.getSeq().performBiosafetyCheck());
@@ -393,9 +390,11 @@ public class Part extends ObjBase {
         return allObjects;
     }
 
-    /**Generic method for disposing of an item that contains no dependencies.  If the item
-     * has dependencies, it retrieves those dependencies and throws them up in a jdialog menu
-     * from which the user can select and press delete to call disposeEverywhere on those
+    /**
+     * Generic method for disposing of an item that contains no dependencies. If
+     * the item has dependencies, it retrieves those dependencies and throws
+     * them up in a jdialog menu from which the user can select and press delete
+     * to call disposeEverywhere on those
      *
      * @return = true if item was successfully deleted, false otherwise
      */
@@ -403,7 +402,7 @@ public class Part extends ObjBase {
     public boolean deleteFromDatabase() {
         if (!Collector.getCurrentUser().getUUID().equals(this.getAuthor().getUUID())) {
             if (!Collector.getCurrentUser().isAdmin()) {
-                System.out.println("Current user " + this.getAuthor().getDisplayName() + " does not have permission to modify " + this.getName());
+                StatusDisplayer.getDefault().setStatusText("Current user " + this.getAuthor().getDisplayName() + " does not have permission to modify " + this.getName());
                 return false;
             }
         }
@@ -425,8 +424,9 @@ public class Part extends ObjBase {
         List results = mainQuery.getResults();
         for (Object obj : results) {
             Part apart = (Part) obj;
-            if (apart.getComposition().contains(this.getUUID()));
-            conflictList.add(apart);
+            if (apart.getComposition().contains(this.getUUID()) && !apart.getUUID().equals(this.getUUID())) {
+                conflictList.add(apart);
+            }
         }
         List<ObjBase> plasmids = this.getPlasmids();
         conflictList.addAll(plasmids);
@@ -472,6 +472,9 @@ public class Part extends ObjBase {
             NucSeq nseq = this.getSeq();
             nseq.deleteFromDatabase();
             nseq.setTransient();
+            //remove part and nucseq from Collector
+            Collector.remove(this);
+            Collector.remove(nseq);
             return true;
         }
         return false;
@@ -551,8 +554,9 @@ public class Part extends ObjBase {
     }
 
     /**
-     * This is a convenience method, the real change to the sequence
-     * happens in the linked NucSeq
+     * This is a convenience method, the real change to the sequence happens in
+     * the linked NucSeq
+     *
      * @param newseq
      */
     public void changeSequence(final String newseq) {
@@ -574,14 +578,12 @@ public class Part extends ObjBase {
             return;
         }
         ActionListener undo = new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 Collector.getNucSeq(_partDatum._seqID).APIchangeSeq(oldseq);
             }
         };
         ActionListener redo = new ActionListener() {
-
             @Override
             public void actionPerformed(ActionEvent e) {
                 Collector.getNucSeq(_partDatum._seqID).APIchangeSeq(newseq);
@@ -592,7 +594,6 @@ public class Part extends ObjBase {
         _partDatum._riskGroup = -1;
         final Part item = this;
         Thread bslThread = new Thread() {
-
             @Override
             public void run() {
                 // setChanged(org.clothocore.api.dnd.RefreshEvent.Condition.NAME_CHANGED);
@@ -607,6 +608,7 @@ public class Part extends ObjBase {
 
     /**
      * Change the Format of the Part
+     *
      * @param f
      */
     public void changeFormat(Format f) {
@@ -736,9 +738,9 @@ public class Part extends ObjBase {
     }
 
     /**
-     * Determines the risk group of the Part,
-     * relayed from the initial call to NucSeq's
-     * call to foreign server
+     * Determines the risk group of the Part, relayed from the initial call to
+     * NucSeq's call to foreign server
+     *
      * @param rg
      */
     private void setRiskGroup(short rg) {
@@ -762,11 +764,11 @@ public class Part extends ObjBase {
                     relayRiskGroup(currentHighest);
                 }
 
-                
+
                 //If a subpart has a 2+ risk group
                 if (p.getRiskGroup() > 1) {
                     if (firsthigher) {
-                        
+
                         //Throw a dialog asking for user to put in the new risk group
                         ButtonGroup group = new javax.swing.ButtonGroup();
                         String msgString = "This composite part joins two subparts with risk groups of 2 or higher.  What should the new value be?";
@@ -781,10 +783,10 @@ public class Part extends ObjBase {
                         array[0] = msgString;
 
                         /* // sbhatia commented this out
-                        int sel = -1;
-                        while (sel != 0) {
-                            sel = JOptionPane.showConfirmDialog(null, array, "", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
-                        }*/
+                         int sel = -1;
+                         while (sel != 0) {
+                         sel = JOptionPane.showConfirmDialog(null, array, "", JOptionPane.DEFAULT_OPTION, JOptionPane.QUESTION_MESSAGE);
+                         }*/
                         buttons[0].setSelected(true); // sbhatia added this line
                         scanButtons:
                         for (short i = 1; i < numelements; i++) {
@@ -858,7 +860,6 @@ public class Part extends ObjBase {
         return p;
     }
 
-    
     public static Part retrieveByHash(String hash) {
         if (hash.length() == 0) {
             return null;
@@ -876,9 +877,9 @@ public class Part extends ObjBase {
     public String getHash() {
         return _partDatum._hash;
     }
-    /**-----------------
-    variables
-    -----------------*/
+    /**
+     * ----------------- variables -----------------
+     */
     private PartDatum _partDatum;
 
     public static class PartDatum extends ObjBaseDatum {
@@ -904,7 +905,9 @@ public class Part extends ObjBase {
         Basic, Composite
     };
 
-    /******* FIELDS *******/
+    /**
+     * ***** FIELDS ******
+     */
     public enum Fields {
 
         NAME,

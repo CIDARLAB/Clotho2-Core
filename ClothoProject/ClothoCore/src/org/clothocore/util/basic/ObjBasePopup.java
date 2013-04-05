@@ -131,72 +131,75 @@ public class ObjBasePopup {
          constructPopup(o, popupMenu);
     }
     
-    private void constructPopup(ObjBase o, JComponent pooper) {
+    private void constructPopup(ObjBase o, JComponent popup) {
+        if(o==null) {
+            return;
+        }
          Object[] _viewers = Collator.getAvailableViewers(o.getType()).toArray();
          ItemHandler handler = new ItemHandler(o);
 
          JLabel headerlabel = new JLabel();
          headerlabel.setText(o.getType().toString() + " " + o.getName());
          headerlabel.setFont(new Font("Arial", Font.ITALIC, 10));
-         pooper.add( headerlabel );
+         popup.add( headerlabel );
 
          //Add Save menu option
          JMenuItem saveMenu = new JMenuItem( "Save to database" );
          menuOptions.add(saveMenu);
-         pooper.add( saveMenu );
+         popup.add( saveMenu );
          saveMenu.addActionListener( handler );
 
          //Add Delete menu option
          JMenuItem delMenu = new JMenuItem( "Delete" );
          menuOptions.add(delMenu);
-      //   pooper.add( delMenu );   //since method isn't implemented, this is currently silenced
+         popup.add( delMenu );   //since method isn't implemented, this is currently silenced
          delMenu.addActionListener( handler );
 
          //Add Update menu option
          JMenuItem updateMenu = new JMenuItem( "Update" );
          menuOptions.add(updateMenu);
-         pooper.add( updateMenu );
+         popup.add( updateMenu );
          updateMenu.addActionListener( handler );
 
-         //Add Delete menu option
+         //Add Revert menu option
          JMenuItem revMenu = new JMenuItem( "Revert" );
          menuOptions.add(revMenu);
-         pooper.add( revMenu );
+         popup.add( revMenu );
          revMenu.addActionListener( handler );
 
          //Add undo menu option
          JMenuItem undoMenu = new JMenuItem( "Undo" );
          menuOptions.add(undoMenu);
-         pooper.add( undoMenu );
+         popup.add( undoMenu );
          undoMenu.addActionListener( handler );
 
          //Add redo menu option
          JMenuItem redoMenu = new JMenuItem( "Redo" );
          menuOptions.add(redoMenu);
-         pooper.add( redoMenu );
+         popup.add( redoMenu );
          redoMenu.addActionListener( handler );
 
          //Add copy menu option
          JMenuItem copyMenu = new JMenuItem( "Copy to clipboard" );
          menuOptions.add(copyMenu);
-         pooper.add( copyMenu );
+         popup.add( copyMenu );
          copyMenu.addActionListener( handler );
 
          //Add paste menu option
          JMenuItem pasteMenu = new JMenuItem( "Paste from clipboard" );
          menuOptions.add(pasteMenu);
-         pooper.add( pasteMenu );
+         popup.add( pasteMenu );
          pasteMenu.addActionListener( handler );
 
          //Add export to xml menu option
          JMenuItem xmlMenu = new JMenuItem( "Export to XML" );
          menuOptions.add(xmlMenu);
-         pooper.add( xmlMenu );
+         popup.add( xmlMenu );
          xmlMenu.addActionListener( handler );
 
          //Add export to xml menu option
          final subMenu searchTagMenu = new subMenu( "Search tags" );
-         pooper.add( searchTagMenu );
+         popup.add( searchTagMenu );
 
              //Add add tag submenu
              JMenuItem addTagMenu = new JMenuItem( "Add search tag" );
@@ -234,21 +237,21 @@ public class ObjBasePopup {
          JLabel launchlabel = new JLabel();
          launchlabel.setText("Launch Viewer:");
          launchlabel.setFont(new Font("Arial", Font.ITALIC, 10));
-         pooper.add( launchlabel );
+         popup.add( launchlabel );
 
          //Add a separator
          JSeparator jsep1 = new JSeparator();
-         pooper.add( jsep1 );
+         popup.add( jsep1 );
 
          //Add launch preferred viewer menu option
          JMenuItem launchMenu = new JMenuItem( "Preferred Viewer" );
          menuOptions.add(launchMenu);
-         pooper.add( launchMenu );
+         popup.add( launchMenu );
          launchMenu.addActionListener( handler );
 
          //Add launch viewer JMenu to fill with options
          JMenu chooseViewerMenu = new JMenu( "Choose Viewer" );
-         pooper.add( chooseViewerMenu );
+         popup.add( chooseViewerMenu );
 
          // construct each menu item and add to popup menu; also
          // enable event handling for each menu item
@@ -261,7 +264,7 @@ public class ObjBasePopup {
              viewerHash.put(_viewers[i].toString(), (ViewerWrapper) _viewers[i]);
          }
          
-         addItemSpecificFields(pooper, o);
+         addItemSpecificFields(popup, o);
     }
 
     private void addJumpToSeparator(JComponent pooper) {

@@ -1371,31 +1371,32 @@ public class NucSeq extends ObjBase implements Serializable {
      * @return the biosafety level of this NucSeq
      */
     Short performBiosafetyCheck() {
-       System.out.println( "performBiosafetyCheck triggered" );
-       short rg = -1;
-       rg = getBSLfromServer();
-       //If it's RG3+, show a special message
-       if ( rg == 4 ) {
-           ImageIcon bslicon = ImageUtilities.loadImageIcon( "org/clothocore/images/BIOHAZARD.png", false );
-           JOptionPane.showMessageDialog( null,
-                                          "You have executed a risk group check on a sequence that came back\n"
-                   + "as Risk Group 4.\nSuch materials could be highly dangerous!\n"
-                   + "You should examine your design closer before proceeding.",
-                                          "Risk Group 4 material!",
-                                          JOptionPane.INFORMATION_MESSAGE,
-                                          bslicon );
-       }
-       if ( rg == 5 ) {
-           ImageIcon bslicon = ImageUtilities.loadImageIcon( "org/clothocore/images/BIOHAZARD.png", false );
-           JOptionPane.showMessageDialog( null,
-                                          "You have executed a risk group check on a sequence that came back\n"
-                   + "as being highly similar to a select agent.\nSuch materials could be highly dangerous and potential illegal!\n"
-                   + "You should examine your design closer before proceeding.",
-                                          "Select Agent detected!",
-                                          JOptionPane.INFORMATION_MESSAGE,
-                                          bslicon );
-       }
-       return rg;
+//       System.out.println( "performBiosafetyCheck triggered" );
+//       short rg = -1;
+//       rg = getBSLfromServer();
+//       //If it's RG3+, show a special message
+//       if ( rg == 4 ) {
+//           ImageIcon bslicon = ImageUtilities.loadImageIcon( "org/clothocore/images/BIOHAZARD.png", false );
+//           JOptionPane.showMessageDialog( null,
+//                                          "You have executed a risk group check on a sequence that came back\n"
+//                   + "as Risk Group 4.\nSuch materials could be highly dangerous!\n"
+//                   + "You should examine your design closer before proceeding.",
+//                                          "Risk Group 4 material!",
+//                                          JOptionPane.INFORMATION_MESSAGE,
+//                                          bslicon );
+//       }
+//       if ( rg == 5 ) {
+//           ImageIcon bslicon = ImageUtilities.loadImageIcon( "org/clothocore/images/BIOHAZARD.png", false );
+//           JOptionPane.showMessageDialog( null,
+//                                          "You have executed a risk group check on a sequence that came back\n"
+//                   + "as being highly similar to a select agent.\nSuch materials could be highly dangerous and potential illegal!\n"
+//                   + "You should examine your design closer before proceeding.",
+//                                          "Select Agent detected!",
+//                                          JOptionPane.INFORMATION_MESSAGE,
+//                                          bslicon );
+//       }
+//       return rg;
+        return -1;
    }
 
    /**

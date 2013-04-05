@@ -299,16 +299,14 @@ public abstract class ObjBase implements Serializable {
      * @return = true if item was successfully deleted, false otherwise
      */
     public boolean deleteFromDatabase() {
-        ///TEMPORARILY REPRESSED///
-        return false;
-        /*
         if ( Hub.defaultConnection.delete( this ) ) {
         this._inDatabase = false;
         this.setTransient();
+        Collector.remove(this);
         return true;
         }
         return false;
-         * */
+
     }
 
     public void launchDefaultViewer() {
