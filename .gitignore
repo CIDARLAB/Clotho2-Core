@@ -3,3 +3,4 @@ ClothoProject/ClothoCore/build*
 HibernateConnectionLibrary/build*
 
 *.class
+platform-private.properties
